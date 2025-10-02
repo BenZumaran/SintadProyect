@@ -1,0 +1,37 @@
+package com.sintad.gestion_clientes.mapper;
+
+import com.sintad.gestion_clientes.model.entity.Client;
+import com.sintad.gestion_clientes.model.ClientRequest;
+import com.sintad.gestion_clientes.model.ClientResponse;
+import org.springframework.cglib.core.Local;
+
+import java.time.ZoneId;
+
+public class ClientMapper {
+
+    private ClientMapper(){}
+
+    public static ClientResponse toClientResponse(Client client) {
+        if (client == null) return null;
+        ClientResponse response = new ClientResponse();
+        response.setId(client.getId() != null ? client.getId().intValue() : null);
+        response.setNombre(client.getNombre());
+        response.setApellido(client.getApellido());
+        response.setCorreo(client.getCorreo());
+        response.setTelefono(client.getTelefono());
+        response.setEstado(client.getEstado());
+        response.setFechaRegistro(client.getFechaRegistro() != null ? client.getFechaRegistro().atZone(ZoneId.systemDefault()).toOffsetDateTime() : null);
+        return response;
+    }
+
+    public static Client toClient(ClientRequest request) {
+        if (request == null) return null;
+        return Client.builder()
+            .nombre(request.getNombre())
+            .apellido(request.getApellido())
+            .correo(request.getCorreo())
+            .telefono(request.getTelefono())
+            .build();
+    }
+
+}

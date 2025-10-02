@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: Clientes API
+  version: 1.0.0
+  description: API for managing clients with CRUD operations.
+
+servers:
+  - url: http://localhost:8085/api/v1
+
+paths:
+  /clientes:
+    get:
+      summary: Get all clients
+      operationId: getAllClients
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of clients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClientResponse'
+
+    post:
+      summary: Create a new client
+      operationId: createClient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientRequest'
+      responses:
+        '201':
+          description: Client created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+
+  /clientes/{id}:
+    get:
+      summary: Get client by ID
+      operationId: getClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Client found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '404':
+          description: Client not found
+
+    put:
+      summary: Update client by ID
+      operationId: updateClient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientRequest'
+      responses:
+        '200':
+          description: Client updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '404':
+          description: Client not found
+
+    delete:
+      summary: Delete client by ID
+      operationId: deleteClient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Client deleted successfully
+        '404':
+          description: Client not found
+  /clientes/count:
+    get:
+      summary: Get clients rows count
+      operationId: getClientsCount
+      responses:
+        '200':
+          description: List of clients
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 42
+  /clientes/{id}/{state}:
+    patch:
+      summary: Update client estado by ID
+      operationId: updateClientEstado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: state
+          in: path
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '204':
+          description: Client deleted successfully
+        '404':
+          description: Client not found
+  /clientes/login:
+    post:
+      summary: Login
+      operationId: userLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Token Barier
+          content:
+            application/json:
+              schema:
+                type: string
+
+
+components:
+  schemas:
+    ClientRequest:
+      type: object
+      required:
+        - nombre
+        - apellido
+      properties:
+        nombre:
+          type: string
+          maxLength: 50
+          example: Juan
+        apellido:
+          type: string
+          maxLength: 50
+          example: Pérez
+        correo:
+          type: string
+          format: email
+          example: juan.perez@email.com
+        telefono:
+          type: string
+          pattern: '^[0-9]{9}$'
+          example: "987654321"
+
+    ClientResponse:
+      allOf:
+        - $ref: '#/components/schemas/ClientRequest'
+        - type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            fecha_registro:
+              type: string
+              format: date-time
+              example: "2025-09-30"
+            estado:
+              type: boolean
+              description: true = activo, false = inactivo
+              example: true
