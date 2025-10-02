@@ -12,9 +12,8 @@ public class ClientMapper {
     private ClientMapper(){}
 
     public static ClientResponse toClientResponse(Client client) {
-        if (client == null) return null;
         ClientResponse response = new ClientResponse();
-        response.setId(client.getId() != null ? client.getId().intValue() : null);
+        response.setId(client.getId().intValue());
         response.setNombre(client.getNombre());
         response.setApellido(client.getApellido());
         response.setCorreo(client.getCorreo());
@@ -25,7 +24,6 @@ public class ClientMapper {
     }
 
     public static Client toClient(ClientRequest request) {
-        if (request == null) return null;
         return Client.builder()
             .nombre(request.getNombre())
             .apellido(request.getApellido())

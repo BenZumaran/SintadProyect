@@ -4,8 +4,10 @@ import com.sintad.gestion_clientes.model.UserLoginRequest;
 import com.sintad.gestion_clientes.model.entity.UserEntity;
 
 public class UserMapper {
+
+    private UserMapper(){}
+
     public static UserEntity toUser(UserLoginRequest request) {
-        if (request == null) return null;
         UserEntity user = new UserEntity();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
