@@ -7,6 +7,8 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
 public interface UserRepository extends ReactiveCrudRepository<UserEntity,Long> {
+
+    //To manage security
     @Query("select * from users where username = :username")
     Mono<UserEntity> findByUsername(String username);
 }

@@ -7,10 +7,12 @@ import org.springframework.cglib.core.Local;
 
 import java.time.ZoneId;
 
+//To manage client data conversions
 public class ClientMapper {
 
     private ClientMapper(){}
 
+    //From Client to Client Response
     public static ClientResponse toClientResponse(Client client) {
         ClientResponse response = new ClientResponse();
         response.setId(client.getId().intValue());
@@ -22,7 +24,7 @@ public class ClientMapper {
         response.setFechaRegistro(client.getFechaRegistro() != null ? client.getFechaRegistro().atZone(ZoneId.systemDefault()).toOffsetDateTime() : null);
         return response;
     }
-
+    //From ClientRequest to Client Client
     public static Client toClient(ClientRequest request) {
         return Client.builder()
             .nombre(request.getNombre())

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+//To manage the authentication bearer
 @Component
 public class AuthManager implements ReactiveAuthenticationManager {
 

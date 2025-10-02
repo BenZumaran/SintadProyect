@@ -15,12 +15,15 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
+//To implements endpoints comming from OpenApi
 @Service
 public class ClientesApiDelegateImp implements ClientesApiDelegate {
 
+    //brings data
     @Autowired
     ClientService clientService;
 
+    //To manage user Authentication and token generation
     @Autowired
     PrincipalUserDetailService principalUserDetailService;
 

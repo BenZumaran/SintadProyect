@@ -3,6 +3,7 @@ package com.sintad.gestion_clientes.config.security;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+//To bring token credentials
 public class BearerToken extends AbstractAuthenticationToken {
 
     private final String token;
