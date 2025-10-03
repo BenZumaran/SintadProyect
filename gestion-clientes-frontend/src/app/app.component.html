@@ -1,0 +1,6 @@
+@if (logged) {
+<app-dashboard />
+}
+@else {
+<app-login (loginEvent)="handleLoginEvent($event)" />
+}
